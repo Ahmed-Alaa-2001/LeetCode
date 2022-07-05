@@ -8,7 +8,7 @@ public:
         ll &ret=dp[i];
         if(ret!=-1)return ret;
         ll leave=0,take=i*mp[i];
-        if(i>=2)take+=solve(i-2);
+        take+=solve(i-2);
         leave=solve(i-1);
         return ret=max(take,leave);
     }

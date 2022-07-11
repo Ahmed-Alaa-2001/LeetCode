@@ -1,31 +1,42 @@
 class Solution {
-//int dp[200][200];
-map<int,map<int,int>>dp;
-int mx=INT_MIN;
 public:
-   int getMaxLen(vector<int>& nums) {
-        int n=nums.size();
-        int pos=0;  
-        int neg=0;   
-        int ans=0;
-        for(int i=0;i<n;i++){
-            if(nums[i]==0){
-                pos=0;
-                neg=0;
-            }
-            else if(nums[i]>0){
-                pos+=1;
-                if(neg!=0) neg+=1;
-            }
+    int n;
+    vector<int>v;
+    vector<vector<int>>all;
+    int getMaxLen(vector<int>& nums) {
+        vector<int>now;
+        for(int x = 0; x<nums.size(); x++){
+            if(nums[x] == 0) {if(now.size())all.push_back(now);now.clear();}
+            else now.push_back(nums[x]);
+        }
+        if(nums[nums.size()-1] != 0){ all.push_back(now);}
+        int ans = 0;
+        for(auto it: all){
+            int negatives = 0;
+            for(auto itt: it) if(itt<0)negatives++;
+            if(negatives%2 == 0)ans = max(ans, (int)it.size());
             else{
-                int temp=neg;
-                neg=pos+1;
-                if(temp==0) pos=0;
-                else pos=temp+1;
+                int firstNeg = 0 , lastNeg = 0;
+                for(int x = 0; x<it.size(); x++){
+                    if(it[x] < 0){
+                        firstNeg =x;
+                        break;
+                    }
+                }
+                for(int x = it.size()-1; x>=0; x--){
+                    if(it[x] < 0){
+                        lastNeg = x;
+                        break;
+                    }
+                }
+                int sizeLeft = (int)it.size() - firstNeg - 1;
+                int sizeRight = lastNeg;
+                cout<<sizeLeft<<" "<<sizeRight<<"\n";
+               
+                ans = max({ans, sizeLeft, sizeRight});
+                
             }
-            ans=max(ans,pos);
         }
         return ans;
-        
     }
 };

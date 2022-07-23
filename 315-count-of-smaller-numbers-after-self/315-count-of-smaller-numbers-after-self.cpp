@@ -8,10 +8,9 @@ public:
         vector<int>v2(a.size());
         set_t s;
         for(int i=a.size()-1;i>=0;i--){
-            v2[i]=s.order_of_key({a[i],-1});
             s.insert({a[i],a.size()-i});
+            v2[i]=s.order_of_key({a[i],-1});
         }
         return v2;
-
     }
 };

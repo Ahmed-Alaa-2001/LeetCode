@@ -1,10 +1,14 @@
 class Solution {
 public:
     bool isPerfectSquare(int n) {
-        int sq=sqrt(n);
-        if(sq*sq*1.0==n){
-            return 1;
+        long long l=0,r=214748347,md;
+        while(r-l!=1){
+            md=l+(r-l)/2;
+            if(n<=md*md)r=md;
+            else l=md;
         }
-        return 0;
+        cout<<r<<'\n';
+        if(r*r==n)return 1;
+        else return 0;
     }
 };
